@@ -1,4 +1,5 @@
 def addCards():
 
 
-def addDeck():
+def addDeck(createRequest):
+# TODO handle if the deck already exists
