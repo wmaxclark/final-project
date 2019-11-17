@@ -37,7 +37,7 @@ def study():
     while selecting == True:
         
         # Displays a list of the decks that are already there
-        print("Please select a deck to study from the following: " + availableDecks)
+        print("Available decks: " + availableDecks.title() + ". \nWhich would you like to study?")
         
         # Gets valid name of a deck
         userFileRequest = v.getStringByLength("Type the name here: " , "Not a valid selection.", 3, 15) 
@@ -73,30 +73,33 @@ def study():
 
 
     # User selects how many cards to study
-    userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ", "Needs to be a number between one and thirty, please. ", 1, 30) 
+    userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ", "Needs to be a number between one and thirty, please. ", 1, 30) # TODO short session medium session or long session instead of user selected
     for i in range(userCardNumber):
 
         # Randomly picks a direction, either giving prompts and recieving answers or vice versa
         currentDirection = r.randint(0, 1)
 
         # Picks a random card out of the deck weighted by the difficulty
-##        currentCard = r.randrange(0, len(cardDifficulty) - 1)
-##        currentcard = int(cardDifficulty[currentCard])
+        currentCardList = r.choices(cardPrompts, weights=cardDifficulty, cum_weights=None, k=userCardNumber)
+        i = 0
+        currentCard = currentCardList[i]
+
         
-        currentCard = 0
+        
 
         
         correct = False
 
-        # Checks direction
-        if currentDirection == 0:
+        # Repeats as long as you don't have the right answer
+        while correct == False:
+        
             
-            # Repeats as long as you don't have the right answer
+            # Checks direction
             # TODO tracked difficulty
-            while correct == False:
+            if currentDirection == 0:
 
                 # Gets an answer from user
-                userAnswer = v.getStringByLength("Prompt: "  + str(cardPrompts[currentCard]) + "\nAnswer: ", "That's not even a word.. \n", 0, 30)
+                userAnswer = v.getStringByLength("Prompt: "  + str(cardPrompts[currentCard]) + "\nAnswer: ", "That's not even a word.. \n", 0, 30) # TODO X word and Y word
 
                 # Checks user answer against answer cards
                 if userAnswer == str(cardAnswers[currentCard]):
@@ -105,13 +108,14 @@ def study():
                 else:
                     print("Not quite, try again\n")
 
+                i += 0
+                currentCard = currentCardList[i]
 
-        elif currentDirection == 1:
-            
-            while correct == False:
+
+            elif currentDirection == 1:
 
                 # Gets an answer from user
-                userAnswer = v.getStringByLength("Answer: "  + str(cardAnswers[currentCard]) + "\nPrompt: ", "That's not even a word.. \n", 0, 30)
+                userAnswer = v.getStringByLength("Answer: "  + str(cardAnswers[currentCard]) + "\nPrompt: ", "That's not even a word.. \n", 0, 30) # TODO X word Y word
 
                 # Checks user answer against prompt cards as the direction is reversed
                 if userAnswer == str(cardPrompts[currentCard]):
@@ -119,6 +123,10 @@ def study():
                     print("Correct!\n")
                 else:
                     print("Not quite, try again\n")
-        
+
+                i += 0
+                currentCard = currentCardList[i]
 
     print("Good job studying! ")
+
+study()
