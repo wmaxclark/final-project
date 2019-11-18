@@ -19,6 +19,7 @@ def study():
     cardPrompts = []
     cardAnswers = []
     cardDifficulty = []
+    currentCardList = []
     difficultyChanges = []
     
     currentCard = 0
@@ -45,9 +46,9 @@ def study():
         try:
             # Writes prompts to an array
             deckPrompts = open("C:/Users/Home/Desktop/decks/" + userFileRequest + "/" + userFileRequest + "prompts.txt", "r")  
-            for i in deckPrompts:
-                i = deckPrompts.readline()
-                cardPrompts.append(i.rstrip("\n"))
+            for t in deckPrompts:
+                t = deckPrompts.readline()
+                cardPrompts.append(t.rstrip("\n"))
             deckPrompts.close()
             
             # Writes answers to an array
@@ -59,9 +60,9 @@ def study():
             
             # Writes difficulties to an array
             deckDifficulty = open("C:/Users/Home/Desktop/decks/" + userFileRequest + "/" + userFileRequest + "difficulty.txt", "r") 
-            for k in deckDifficulty:
-                k = deckDifficulty.readline()
-                cardDifficulty.append(k.rstrip("\n"))
+            for f in deckDifficulty:
+                f = deckDifficulty.readline()
+                cardDifficulty.append(f.rstrip("\n"))
             deckDifficulty.close()
 
             # When the arrays have all been completed, the user has finished selecting and the loop is closed
@@ -74,6 +75,7 @@ def study():
 
     # User selects how many cards to study
     userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ", "Needs to be a number between one and thirty, please. ", 1, 30) # TODO short session medium session or long session instead of user selected
+    userCardNumber = int(userCardNumber)
     for i in range(userCardNumber):
 
         # Randomly picks a direction, either giving prompts and recieving answers or vice versa
@@ -81,8 +83,8 @@ def study():
 
         # Picks a random card out of the deck weighted by the difficulty
         currentCardList = r.choices(cardPrompts, weights=cardDifficulty, cum_weights=None, k=userCardNumber)
-        i = 0
-        currentCard = currentCardList[i]
+        g = 0
+        currentCard = currentCardList[g]
 
         
         
@@ -103,13 +105,14 @@ def study():
 
                 # Checks user answer against answer cards
                 if userAnswer == str(cardAnswers[currentCard]):
-                    correct = True
                     print("Correct!\n")
+                    g += 0
+                    currentCard = currentCardList[g]
+                    correct = True
                 else:
                     print("Not quite, try again\n")
 
-                i += 0
-                currentCard = currentCardList[i]
+                
 
 
             elif currentDirection == 1:
@@ -119,13 +122,13 @@ def study():
 
                 # Checks user answer against prompt cards as the direction is reversed
                 if userAnswer == str(cardPrompts[currentCard]):
-                    correct = True
                     print("Correct!\n")
+                    g += 0
+                    currentCard = currentCardList[g]
+                    correct = True
                 else:
                     print("Not quite, try again\n")
 
-                i += 0
-                currentCard = currentCardList[i]
 
     print("Good job studying! ")
 
