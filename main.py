@@ -32,7 +32,7 @@ def main():
 
 def showMenu():
      
-    print("\t l. Study some flashcards from an existing deck.")
+    print("\t l. Study some flashcards from your deck.")
     print("\t 2. Add flashcards to an existing deck.") #TODO
     print("\t 3. Create a new deck of cards.") #TODO
     print("\t 4. Quit")
