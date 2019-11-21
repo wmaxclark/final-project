@@ -120,7 +120,7 @@ def study():
                 # Checks user answer against answer cards
                 if userAnswer == str(currentCard[1]):
                     print("Correct!\n")
-                    i += 1
+                    
 
                     
                     correct = True
@@ -135,7 +135,7 @@ def study():
                 # Checks user answer against prompt cards as the direction is reversed
                 if userAnswer == str(currentCard[0]):
                     print("Correct!\n")
-                    i += 1
+                    
                     correct = True
                 else:
                     print("Not quite, try again\n")
