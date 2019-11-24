@@ -30,7 +30,7 @@ def study():
     selecting = True
 
     # Creates an array of strings of the decks that are currently available
-    availableDecks = str(os.listdir("C:/Users/Home/Desktop/decks/")) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
+    availableDecks = str(os.listdir()) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
     availableDecks = availableDecks.replace("'", "")
     availableDecks = availableDecks.replace("[", "")
     availableDecks = availableDecks.replace("]", "")
@@ -91,12 +91,18 @@ def study():
 
     for i in range(userCardNumber):
 
+
         # Randomly picks a direction
         # Either giving prompts and recieving answers or vice versa
+
+        print(userCardNumber)
+        
+        # Randomly picks a direction, either giving prompts and recieving answers or vice versa
         currentDirection = r.randint(0, 1)
 
         currentRange = r.randint(0, 100)
         if currentRange <= 10 and len(easyCards) > 0:
+            
             currentCard = easyCards[r.randint(0, len(easyCards))]
 
         elif currentRange <= 50 and len(normalCards) > 0:
@@ -109,6 +115,23 @@ def study():
         # TODO keep track of how many you got right/wrong
         # print(currentCard)
         while correct != True:
+
+
+            currentCard = easyCards[r.randint(0, len(easyCards) - 1)]
+            
+        elif currentRange <= 50 and len(normalCards) > 0:
+            currentCard = normalCards[r.randint(0, len(normalCards) - 1)]
+            
+        elif len(hardCards) > 0:
+            currentCard = hardCards[r.randint(0, len(hardCards) - 1)]
+    
+            
+        # Repeats as long as you don't have the right answer
+        # TODO keep track of how many you got right/wrong
+        # print(currentCard)
+        correct = False
+        while correct == False:
+            
 
             # Checks direction
             # TODO tracked difficulty
