@@ -15,10 +15,10 @@ def selectDeck():
     while selecting == True:
         
         # Displays a list of the decks that are already there
-        print("Available decks: " + availableDecks.title() + ". \nWhich would you like to add cards to?")
+        print("Available decks: " + availableDecks.title() + ". \n")
         
         # Gets valid name of a deck
-        userFileRequest = v.getStringByLength("Type the name here: " , "Not a valid selection.", 3, 15)
+        userFileRequest = v.getStringByLength("Type the name of the deck here to select: " , "Not a valid selection.", 3, 15)
         userFileRequest = userFileRequest.lower()
         userFileRequest = userFileRequest.replace(".", "")
         

@@ -5,9 +5,21 @@ import deckmanager as d
 import os
 
 def getDeck():
+
+    easyCards = []
+    normalCards = []
+    hardCards = []
+    deck = []
+    
+    # Calls selectdeck to pick which deck to study
     userFileRequest = d.selectDeck()
+
+    # Opens the deck to read mode
     fh = open(userFileRequest + ".csv", "r")
+
+    # Loops while reading file
     for line in fh:
+        
         # Strips carriage return
         line = line.rstrip("\n")
         
@@ -25,19 +37,19 @@ def getDeck():
         # Adds to hard card list if labeled hard
         elif card[2] == "3":
             hardCards.append(card)
-            
-        # Creates an array of all the cards in the deck
-        deck.append(easyCards + normalCards + hardCards)
-        
+
     fh.close()
-    return deck
+    
+    # Returns the card arrays
+    return(easyCards, normalCards, hardCards)
+    
 
 def study():
 
-    
     userAnswer = ""
     correctAnswer = ""    
-    userCardNumber = ""    
+    userCardNumber = ""
+    picker = 0
 
     deck = []
     card = []
@@ -51,25 +63,34 @@ def study():
     deckLength = 0
     correct = False
     selecting = True
+
+
+    easyCards, normalCards, hardCards = getDeck()
     
     # User selects how many cards to study
     userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ", "Needs to be a number between one and thirty, please. ", 1, 30) # TODO short session medium session or long session instead of user selected
     
     for i in range(userCardNumber):
-        print(userCardNumber)
         
+               
         # Randomly picks a direction, either giving prompts and recieving answers or vice versa
         currentDirection = r.randint(0, 1)
 
         currentRange = r.randint(0, 100)
         if currentRange <= 10 and len(easyCards) > 0:
-            currentCard = deck[0[r.randint(0, len(deck[0]) - 1)]]
+            picker = r.randint(0, len(easyCards) - 1)
+            currentCard = easyCards[picker]
+            
             
         elif currentRange <= 40 and len(normalCards) > 0:
-            currentCard = deck[1[r.randint(0, len(deck[1]) - 1)]]
+            picker = r.randint(0, len(normalCards) - 1)
+            currentCard = normalCards[picker]
+            
             
         elif len(hardCards) > 0:
-            currentCard = deck[2[r.randint(0, len(deck[2]) - 1)]]
+            picker = r.randint(0, len(hardCards) - 1)
+            currentCard = hardCards[picker]
+            
     
             
         # Repeats as long as you don't have the right answer
@@ -111,4 +132,4 @@ def study():
 
     print("Good job studying! ")
 
-# study()
+
