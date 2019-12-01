@@ -1,21 +1,57 @@
 # Study Module
+import validation as v
+import random as r
+import deckmanager as d
+import os
 
+
+def getDeck():
+
+    easyCards = []
+    normalCards = []
+    hardCards = []
+    deck = []
+    
+    # Calls selectdeck to pick which deck to study
+    userFileRequest = d.selectDeck()
+
+    # Opens the deck to read mode
+    fh = open(userFileRequest + ".csv", "r")
+
+    # Loops while reading file
+    for line in fh:
+        
+        # Strips carriage return
+        line = line.rstrip("\n")
+        
+        # Splits line into a list called a card
+        card = line.split(",")
+
+        # Adds to easy card list if labeled easy
+        if card[2] == "1":
+            easyCards.append(card)
+            
+        # Adds to normal card list if labeled normal
+        elif card[2] == "2":
+            normalCards.append(card)
+            
+        # Adds to hard card list if labeled hard
+        elif card[2] == "3":
+            hardCards.append(card)
+
+    fh.close()
+    
+    # Returns the card arrays
+    return(easyCards, normalCards, hardCards)
+    
 
 def study():
 
-    import validation as v
-    import random as r
-    import os
-    # import question as q
-
-    userFileRequest = ""
-
     userAnswer = ""
-    correctAnswer = ""
-
+    correctAnswer = ""    
     userCardNumber = ""
+    picker = 0
 
-    availableDecks = []
     deck = []
     card = []
     currentCard = []
@@ -84,13 +120,18 @@ def study():
     # TEST
     # print(deck)
 
+
+
+    easyCards, normalCards, hardCards = getDeck()
+
+def study():
+    
     # User selects how many cards to study
     # TODO short session medium session or long session instead of user selected
     userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ",
                                     "Needs to be a number between one and thirty, please. ", 1, 30)
 
     for i in range(userCardNumber):
-
 
         # Randomly picks a direction
         # Either giving prompts and recieving answers or vice versa
@@ -102,7 +143,6 @@ def study():
 
         currentRange = r.randint(0, 100)
         if currentRange <= 10 and len(easyCards) > 0:
-            
             currentCard = easyCards[r.randint(0, len(easyCards))]
 
         elif currentRange <= 50 and len(normalCards) > 0:
@@ -110,22 +150,7 @@ def study():
 
         elif len(hardCards) > 0:
             currentCard = hardCards[r.randint(0, len(hardCards))]
-
-        # Repeats as long as you don't have the right answer
-        # TODO keep track of how many you got right/wrong
-        # print(currentCard)
-        while correct != True:
-
-
-            currentCard = easyCards[r.randint(0, len(easyCards) - 1)]
-            
-        elif currentRange <= 50 and len(normalCards) > 0:
-            currentCard = normalCards[r.randint(0, len(normalCards) - 1)]
-            
-        elif len(hardCards) > 0:
-            currentCard = hardCards[r.randint(0, len(hardCards) - 1)]
-    
-            
+ 
         # Repeats as long as you don't have the right answer
         # TODO keep track of how many you got right/wrong
         # print(currentCard)
@@ -165,5 +190,5 @@ def study():
                     correct = True
                 else:
                     print("Not quite, try again\n")
+
     print("Good job studying! ")
-study()
