@@ -4,18 +4,12 @@ import os
 def selectDeck():
    
     # Creates an array of strings of the decks that are currently available
-    availableDecks = str(os.listdir(path='../decks/')) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
+    availableDecks = str(os.listdir(path="../decks/")) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
     availableDecks = availableDecks.replace("'", "")
     availableDecks = availableDecks.replace("[", "")
     availableDecks = availableDecks.replace("]", "")
     availableDecks = availableDecks.replace(".csv", "")
-##    availableDecks = availableDecks.replace("__pycache__", "")
-##    availableDecks = availableDecks.replace("flowcharts", "")
-##    availableDecks = availableDecks.replace("deckmanager.py", "")
-##    availableDecks = availableDecks.replace("main.py", "")
-##    availableDecks = availableDecks.replace("README.md", "")
-##    availableDecks = availableDecks.replace("study.py", "")
-##    availableDecks = availableDecks.replace("validation.py", "")
+
     # TODO make this actually work
     selecting = True
     # Allows the user type in what deck they want to study
@@ -36,7 +30,7 @@ def selectDeck():
         except:
             print("No deck for " + userFileRequest + ".") #TODO maybe add an option to create the deck from here
 
-        return userFileRequest
+    return userFileRequest
 
 
 def addCards():
