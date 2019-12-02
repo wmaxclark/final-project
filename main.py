@@ -1,9 +1,10 @@
+import validation as v
+import study as s
+import deckmanager as d
 
 def main():
 
-    import validation as v
-    import study as s
-    import deckmanager as d
+    
     quitProgram = False
     choice = 0
 
@@ -37,11 +38,5 @@ def showMenu():
     print("\t 2. Add flashcards to an existing deck.") #TODO
     print("\t 3. Create a new deck of cards.") #TODO
     print("\t 4. Quit")
-
-
-
-
-
-
 
 main()
