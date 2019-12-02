@@ -2,6 +2,7 @@
 import validation as v
 import random as r
 import deckmanager as d
+
 import os
 
 
@@ -15,12 +16,12 @@ def getDeck():
     
     
     # Calls selectdeck to pick which deck to study
-    userFileRequest = d.selectDeck()
+    #userFileRequest = d.selectDeck()
 
     # Opens the deck to read mode
-    readFile = open("spanish.csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
+    readFile = open("../decks/" + d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
         
-    listOfLines = readFile.readlines()
+    listOfLines = readFile.readline()
     
         
     # Loops while reading file
@@ -48,7 +49,7 @@ def getDeck():
     print(easyCards, normalCards, hardCards)
     
     # Returns the card arrays
-    return(easyCards, normalCards, hardCards, userFileRequest)
+    return(easyCards, normalCards, hardCards)
 
 def study():
 
@@ -59,7 +60,7 @@ def study():
     currentCard = []
     
     # Gets the deck of cards from the getDeck function
-    easyCards, normalCards, hardCards, userFileRequest = getDeck()
+    easyCards, normalCards, hardCards = getDeck()
          
   
     
