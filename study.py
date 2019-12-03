@@ -2,7 +2,6 @@
 import validation as v
 import random as r
 import deckmanager as d
-
 import os
 
 
@@ -20,15 +19,18 @@ def getDeck():
     userFileRequest = d.selectDeck()
 
     # Opens the deck to read mode
+
     # readFile = open("../decks/" + d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
     # words = d.addCards()
     #readFile = open("../decks/" + d.selectDeck() + ".csv", "r")
-        
+
+    readFile = open(d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
+         
 ##    except:
 ##        print("No deck for " + d.selectDeck() + ".") #TODO maybe add an option to create the deck from here
 ##
     # Loops while reading file
-    with open("../decks/" + userFileRequest + ".csv", "r") as readFile:
+    for line in readFile:
 
         line = readFile.readline()
         # Strips carriage return
@@ -49,7 +51,7 @@ def getDeck():
         elif "3" in card:
             hardCards.append(card)
 
-    
+    readFile.close()    
     print(easyCards, normalCards, hardCards)
     
     # Returns the card arrays
@@ -167,10 +169,10 @@ def study():
     outfile.close()
     outfile = open("spanish.csv", "a")
 
-    for card in easyCards:
+    for cards in easyCards:
         for i in range(2):
-            card.append(easyCards(i))
-        card.append("\n")
+            cards.append(str(easyCards(i)))
+        cards.append("\n")
         outfile.write(str(card))
     outfile.writelines(str(easyCards))
     outfile.writelines(str(normalCards))
