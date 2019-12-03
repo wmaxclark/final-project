@@ -15,18 +15,22 @@ def getDeck():
     listOfLines = []
     
     
+    
     # Calls selectdeck to pick which deck to study
-    #userFileRequest = d.selectDeck()
+    userFileRequest = d.selectDeck()
 
     # Opens the deck to read mode
-    readFile = open("../decks/" + d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
+    # readFile = open("../decks/" + d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
+    # words = d.addCards()
+    #readFile = open("../decks/" + d.selectDeck() + ".csv", "r")
         
-    listOfLines = readFile.readline()
-    
-        
+##    except:
+##        print("No deck for " + d.selectDeck() + ".") #TODO maybe add an option to create the deck from here
+##
     # Loops while reading file
-    for line in listOfLines:
-        
+    with open("../decks/" + userFileRequest + ".csv", "r") as readFile:
+
+        line = readFile.readline()
         # Strips carriage return
         line = line.rstrip("\n")
                 
@@ -50,6 +54,8 @@ def getDeck():
     
     # Returns the card arrays
     return(easyCards, normalCards, hardCards)
+
+
 
 def study():
 
@@ -174,4 +180,4 @@ def study():
 
     print("Good job studying! ")
     
-study()
+

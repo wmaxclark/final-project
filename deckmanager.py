@@ -1,5 +1,6 @@
 import validation as v
 import os
+import study
 
 def selectDeck():
    
@@ -25,15 +26,14 @@ def selectDeck():
         
         try:
             fh = open("../decks/" + userFileRequest + ".csv", "r")
-            fh.close()
             selecting = False
         except:
             print("No deck for " + userFileRequest + ".") #TODO maybe add an option to create the deck from here
 
+    fh.close()
     return userFileRequest
 
     
-
 
 def addCards():
 
