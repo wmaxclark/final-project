@@ -3,7 +3,7 @@ import validation as v
 import random as r
 import deckmanager as d
 import os
-
+import csv
 
 def getDeck():
 
@@ -16,7 +16,7 @@ def getDeck():
     
     
     # Calls selectdeck to pick which deck to study
-    userFileRequest = d.selectDeck()
+    #userFileRequest = d.selectDeck()
 
     # Opens the deck to read mode
 
@@ -24,13 +24,13 @@ def getDeck():
     # words = d.addCards()
     #readFile = open("../decks/" + d.selectDeck() + ".csv", "r")
 
-    readFile = open(d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
+    #readFile = open(d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
          
 ##    except:
 ##        print("No deck for " + d.selectDeck() + ".") #TODO maybe add an option to create the deck from here
 ##
     # Loops while reading file
-    for line in readFile:
+    with open(d.selectDeck() + ".csv", "r") as readFile:
 
         line = readFile.readline()
         # Strips carriage return
@@ -40,15 +40,15 @@ def getDeck():
         card = line.split(",")
         
         # Adds to easy card list if labeled easy
-        if "1" in card:
+        if card[2] == "1":
             easyCards.append(card)
             
         # Adds to normal card list if labeled normal
-        elif "2" in card:
+        elif card[2] == "2":
             normalCards.append(card)
             
         # Adds to hard card list if labeled hard
-        elif "3" in card:
+        elif card[2] == "2":
             hardCards.append(card)
 
     readFile.close()    
@@ -141,43 +141,49 @@ def study():
                     if attempts > 3:
                         print("\nHint: " + currentCard[0][:3])
 
-    if attempts == 0:
-        if currentDifficulty == 1:
-            easyCards[picker][2] = "1"
-        elif currentDifficulty == 2:
-            normalCards[picker][2] = "1"
-        elif currentDifficulty == 3:
-            hardCards[picker][2] = "1"
-    elif attempts <= 2:
-        if currentDifficulty == 1:
-            easyCards[picker][2] = "2"
-        elif currentDifficulty == 2:
-            normalCards[picker][2] = "2"
-        elif currentDifficulty == 3:
-            hardCards[picker][2] = "2"
-    else:
-        if currentDifficulty == 1:
-            easyCards[picker][2] = "3"
-        elif currentDifficulty == 2:
-            normalCards[picker][2] = "3"
-        elif currentDifficulty == 3:
-            hardCards[picker][2] = "3"
-        
+        if attempts == 0:
+            if currentDifficulty == 1:
+                easyCards[picker][2] = "1"
+            elif currentDifficulty == 2:
+                normalCards[picker][2] = "1"
+            elif currentDifficulty == 3:
+                hardCards[picker][2] = "1"
+        elif attempts <= 2:
+            if currentDifficulty == 1:
+                easyCards[picker][2] = "2"
+            elif currentDifficulty == 2:
+                normalCards[picker][2] = "2"
+            elif currentDifficulty == 3:
+                hardCards[picker][2] = "2"
+        else:
+            if currentDifficulty == 1:
+                easyCards[picker][2] = "3"
+            elif currentDifficulty == 2:
+                normalCards[picker][2] = "3"
+            elif currentDifficulty == 3:
+                hardCards[picker][2] = "3"
         
     
-    outfile = open("spanish.csv", "w")
-    outfile.close()
-    outfile = open("spanish.csv", "a")
-
-    for cards in easyCards:
-        for i in range(2):
-            cards.append(str(easyCards(i)))
-        cards.append("\n")
-        outfile.write(str(card))
-    outfile.writelines(str(easyCards))
-    outfile.writelines(str(normalCards))
-    outfile.writelines(str(hardCards))
+    
+    with open("spanish.csv", "w") as outFile:
+        writer = csv.writer(outFile)
+        for card in easyCards:
+            writer.writerows(card)
+        for card in normalCards:
+            writer.writerows(card)
+        for card in hardCards:
+            writer.writerows(card)
         
+        
+
+##    for cards in easyCards:
+##        for i in range(2):
+##            cards.append(str(easyCards(i)))
+##        cards.append("\n")
+##        outfile.write(str(card))
+    
+
+    
             
 
     print("Good job studying! ")
