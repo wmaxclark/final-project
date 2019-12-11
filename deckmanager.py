@@ -5,7 +5,7 @@ import study
 def selectDeck():
    
     # Creates an array of strings of the decks that are currently available
-    availableDecks = str(os.listdir()) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
+    availableDecks = str(os.listdir("../decks")) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
     availableDecks = availableDecks.replace("'", "")
     availableDecks = availableDecks.replace("[", "")
     availableDecks = availableDecks.replace("]", "")
@@ -25,8 +25,7 @@ def selectDeck():
         userFileRequest = userFileRequest.replace(".", "")
         
         try:
-            # fh = open("../decks/" + userFileRequest + ".csv", "r")
-            fh = open(userFileRequest + ".csv", "r")
+            fh = open("../decks/" + userFileRequest + ".csv", "r")
             fh.close()
             selecting = False
         except:
@@ -35,7 +34,7 @@ def selectDeck():
     return userFileRequest
 
     
-
+# selectDeck()
 def addCards():
 
     userFileRequest = selectDeck()

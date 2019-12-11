@@ -13,26 +13,11 @@ def getDeck():
     deck = []
     listOfLines = []
     
-    
-    
-    # Calls selectdeck to pick which deck to study
-    #userFileRequest = d.selectDeck()
-
-    # Opens the deck to read mode
-
-    # readFile = open("../decks/" + d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
-    # words = d.addCards()
-    #readFile = open("../decks/" + d.selectDeck() + ".csv", "r")
-
-    #readFile = open(d.selectDeck() + ".csv", "r") # FIX THIS BUT I HAVE NO IDEA HOW THIS DOESN"T WORK
-         
-##    except:
-##        print("No deck for " + d.selectDeck() + ".") #TODO maybe add an option to create the deck from here
-##
     # Loops while reading file
-    with open(d.selectDeck() + ".csv", "r") as readFile:
+    readFile = open(d.selectDeck() + ".csv", "r")
+    for line in readFile:
 
-        line = readFile.readline()
+        #line = readFile.readline()
         # Strips carriage return
         line = line.rstrip("\n")
                 
@@ -48,15 +33,14 @@ def getDeck():
             normalCards.append(card)
             
         # Adds to hard card list if labeled hard
-        elif card[2] == "2":
+        elif card[2] == "3":
             hardCards.append(card)
 
-    readFile.close()    
-    print(easyCards, normalCards, hardCards)
+    # Close the file
+    readFile.close()
     
     # Returns the card arrays
     return(easyCards, normalCards, hardCards)
-
 
 
 def study():
@@ -69,42 +53,55 @@ def study():
     
     # Gets the deck of cards from the getDeck function
     easyCards, normalCards, hardCards = getDeck()
-         
-  
-    
+
+    print(easyCards, normalCards, hardCards)
     # User selects how many cards to study
     # TODO short session medium session or long session instead of user selected
     userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ",
                                     "Needs to be a number between one and thirty, please. ", 1, 30)
 
+    # Loops as many times as specified by input
     for i in range(userCardNumber):
         
         # Randomly picks a direction, either giving prompts and recieving answers or vice versa
         currentDirection = r.randint(0, 1)
 
+        # Picks a number which will be used to weight how often each type of card will be picked
         currentRange = r.randint(0, 100)
-        if currentRange <= 10 and len(easyCards) > 0:
-            picker = r.randint(0, len(easyCards) - 1)
-            currentDifficulty = 1
-            currentCard = easyCards[picker]
+        try:
+            # If the range is for easy and easyCards isn't empty
+            if currentRange <= 10 and len(easyCards) != 0:
+                # Picks a random number from the cards
+                picker = r.randint(0, len(easyCards) - 1)
+                currentDifficulty = 1
+                currentCard = easyCards[picker]
 
-        elif currentRange <= 50 and len(normalCards) > 0:
-            picker = r.randint(0, len(normalCards) - 1)
-            currentDifficulty = 2
-            currentCard = normalCards[picker]
+            # If the range is for normal and normalCards isn't empty
+            elif currentRange <= 50 and len(normalCards) != 0:
+                # Picks a random number from the cards
+                picker = r.randint(0, len(normalCards) - 1)
+                currentDifficulty = 2
+                currentCard = normalCards[picker]
 
-        elif len(hardCards) > 0:
-            picker = r.randint(0, len(hardCards) - 1)
-            currentDifficulty = 3
-            currentCard = hardCards[picker]
+            # If the range is for hard and hardCards isn't empty
+            elif len(hardCards) != 0:
+                # Picks a random number from the cards
+                picker = r.randint(0, len(hardCards) - 1)
+                currentDifficulty = 3
+                currentCard = hardCards[picker]
+        except:
+            break
+            print("No cards")
 
-
-        
         # Repeats as long as you don't have the right answer
         correct = False
-        while correct == False:
-            
 
+        # Loops as long as the user hasn't answered correctly
+        while correct == False:
+
+            # Resets attempts tracker
+            attempts = 0
+            
             # Checks direction
             if currentDirection == 0:
 
@@ -119,7 +116,9 @@ def study():
                     correct = True
                 else:
                     print("Not quite, try again\n")
+                    # Adds to attempts
                     attempts += 1
+                    # Hint displays when attempts is over 3
                     if attempts > 3:
                         print("\nHint: " + currentCard[1][:3])
 
@@ -137,55 +136,46 @@ def study():
                     correct = True
                 else:
                     print("Not quite, try again\n")
+                    # Adds to attempts
                     attempts += 1
+                    # Hint displays when attempts is over 3
                     if attempts > 3:
                         print("\nHint: " + currentCard[0][:3])
 
-        if attempts == 0:
-            if currentDifficulty == 1:
-                easyCards[picker][2] = "1"
-            elif currentDifficulty == 2:
-                normalCards[picker][2] = "1"
-            elif currentDifficulty == 3:
-                hardCards[picker][2] = "1"
-        elif attempts <= 2:
-            if currentDifficulty == 1:
-                easyCards[picker][2] = "2"
-            elif currentDifficulty == 2:
-                normalCards[picker][2] = "2"
-            elif currentDifficulty == 3:
-                hardCards[picker][2] = "2"
-        else:
-            if currentDifficulty == 1:
-                easyCards[picker][2] = "3"
-            elif currentDifficulty == 2:
-                normalCards[picker][2] = "3"
-            elif currentDifficulty == 3:
-                hardCards[picker][2] = "3"
-        
-    
-    
-    with open("spanish.csv", "w") as outFile:
+            # Checks the number of attempts
+            if attempts == 0:
+                # Checks how difficult the card was
+                if currentDifficulty == 1:
+                    # Replaces the value according to the attempts
+                    easyCards[picker][2] = "1"
+                elif currentDifficulty == 2:
+                    normalCards[picker][2] = "1"
+                elif currentDifficulty == 3:
+                    hardCards[picker][2] = "1"
+            elif attempts <= 2:
+                if currentDifficulty == 1:
+                    easyCards[picker][2] = "2"
+                elif currentDifficulty == 2:
+                    normalCards[picker][2] = "2"
+                elif currentDifficulty == 3:
+                    hardCards[picker][2] = "2"
+            else:
+                if currentDifficulty == 1:
+                    easyCards[picker][2] = "3"
+                elif currentDifficulty == 2:
+                    normalCards[picker][2] = "3"
+                elif currentDifficulty == 3:
+                    hardCards[picker][2] = "3"
+
+    # Opens file to write and closes when finished
+    with open("../decks/spanish.csv", "w", newline='') as outFile:
+        # Creates object to 
         writer = csv.writer(outFile)
         for card in easyCards:
-            writer.writerows(card)
+            writer.writerow(card)
         for card in normalCards:
-            writer.writerows(card)
+            writer.writerow(card)
         for card in hardCards:
-            writer.writerows(card)
+            writer.writerow(card)
         
-        
-
-##    for cards in easyCards:
-##        for i in range(2):
-##            cards.append(str(easyCards(i)))
-##        cards.append("\n")
-##        outfile.write(str(card))
-    
-
-    
-            
-
     print("Good job studying! ")
-    
-
