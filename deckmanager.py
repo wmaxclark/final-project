@@ -5,7 +5,7 @@ import study
 def selectDeck():
    
     # Creates an array of strings of the decks that are currently available
-    availableDecks = str(os.listdir("../decks")) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
+    availableDecks = str(os.listdir("C:/Users/Home/Desktop/final_project/decks/")) # TODO THE FILE PATH CHANGES FOR EACH COMPUTER
     availableDecks = availableDecks.replace("'", "")
     availableDecks = availableDecks.replace("[", "")
     availableDecks = availableDecks.replace("]", "")
@@ -25,14 +25,13 @@ def selectDeck():
         userFileRequest = userFileRequest.replace(".", "")
         
         try:
-            fh = open("../decks/" + userFileRequest + ".csv", "r")
+            fh = open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "r")
             fh.close()
             selecting = False
         except:
             print("No deck for " + userFileRequest + ".") #TODO maybe add an option to create the deck from here
 
     return userFileRequest
-
     
 # selectDeck()
 def addCards():
@@ -46,7 +45,8 @@ def addCards():
             adding = False
         else:
             userAnswer = v.getStringByLength("Enter the correct answer for " + userPrompt + ". ", "Invalid answer", 1, 50)
-            with open(userFileRequest + ".csv", "a") as fh:
-                fh = fh.write("\n" + userPrompt + "," + userAnswer + ",3")
+            with open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "a") as fh:
+                fh = fh.write("\n" + userPrompt + "," + userAnswer)
+            
 
 
