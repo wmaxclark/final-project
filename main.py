@@ -21,11 +21,11 @@ def main():
 
         elif choice == 2:
             d.addCards()
-            #TODO
+            
 
-        # elif choice == 3:
-            # d.addDeck()
-            #TODO
+        elif choice == 3:
+            d.addDeck()
+            
 
         elif choice == 4:
             quitProgram = True
@@ -35,8 +35,8 @@ def main():
 def showMenu():
      
     print("\t l. Study some flashcards from your deck.")
-    print("\t 2. Add flashcards to an existing deck.") #TODO
-    print("\t 3. Create a new deck of cards.") #TODO
+    print("\t 2. Add flashcards to an existing deck.") 
+    print("\t 3. Create a new deck of cards.") 
     print("\t 4. Quit")
 
 main()

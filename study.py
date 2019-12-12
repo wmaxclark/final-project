@@ -45,9 +45,7 @@ def study():
     # Gets the deck of cards from the getDeck function
     deck, userFileRequest = getDeck()
 
-    print(deck)
     # User selects how many cards to study
-    # TODO short session medium session or long session instead of user selected
     userCardNumber = v.getRangedInt("Please enter how many cards you would like to study: ",
                                     "Needs to be a number between one and thirty, please. ", 1, 30)
     # Checks if the deck is valid
@@ -89,8 +87,8 @@ def study():
                         correct = True
                     else:
                         print("Not quite, try again\n")
-                        # Adds to attempts
                         attempts += 1
+
                         # Hint displays when attempts is over 3
                         if attempts > 3:
                             print("\nHint: " + currentCard[1][:3])
@@ -105,24 +103,23 @@ def study():
                     # Checks user answer against prompt cards as the direction is reversed
                     if userAnswer == str(currentCard[0]):
                         print("Correct!\n")
-
                         correct = True
                     else:
                         print("Not quite, try again\n")
-                        # Adds to attempts
                         attempts += 1
+
                         # Hint displays when attempts is over 3
                         if attempts > 3:
                             print("\nHint: " + currentCard[0][:3])
             
-        print(deck)
 
         # Opens file to write and closes when finished
         outfile = open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "w")
 
-        # Creates object to 
+        # Loops for cards in deck 
         for card in deck:
-            print(card)
+
+            # Processes cards
             card = str(card)
             card = card.replace("'", "")
             card = card.replace("[", "")
@@ -130,5 +127,5 @@ def study():
             card = card.replace(" ", "")
             outfile.write(card + "\n")
         
-        
-        print("Good job studying! ")
+        # Completion notice
+        print("Good job studying! \n")

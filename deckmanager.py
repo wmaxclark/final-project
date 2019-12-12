@@ -33,7 +33,7 @@ def selectDeck():
 
     return userFileRequest
     
-# selectDeck()
+
 def addCards():
 
     userFileRequest = selectDeck()
@@ -46,7 +46,14 @@ def addCards():
         else:
             userAnswer = v.getStringByLength("Enter the correct answer for " + userPrompt + ". ", "Invalid answer", 1, 50)
             with open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "a") as fh:
-                fh = fh.write("\n" + userPrompt + "," + userAnswer)
-            
+                fh = fh.write(userPrompt + "," + userAnswer + "\n")
+
+
+def addDeck():
+
+    userFileRequest = v.getStringByLength("Type the name of the new deck: " , "Not a valid deck name.", 3, 15)
+    userFileRequest = userFileRequest.lower()
+    fh = open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "w")
+    fh.close()
 
 
