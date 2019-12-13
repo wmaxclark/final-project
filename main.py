@@ -8,13 +8,14 @@ def main():
     quitProgram = False
     choice = 0
 
+    # Loops as many times as you want
     print("Welcome to Very Small Flashcard App.\n")
     while quitProgram == False:
 
-        # Main Loop
-        
         print("Please select an option from the following: ")
         showMenu()
+
+        # Gets validated choice
         choice = v.getRangedInt("Your Selection: ", "Enter an option 1-4", 1, 4)
         if choice == 1:
             s.study()
@@ -22,11 +23,9 @@ def main():
         elif choice == 2:
             d.addCards()
             
-
         elif choice == 3:
             d.addDeck()
             
-
         elif choice == 4:
             quitProgram = True
     
