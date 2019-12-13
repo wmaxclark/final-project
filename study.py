@@ -11,7 +11,7 @@ def getDeck():
     userFileRequest = d.selectDeck()
     
     # Loops while reading file
-    readFile = open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "r")
+    readFile = open(userFileRequest + ".csv", "r")
     for line in readFile:
 
         #line = readFile.readline()
@@ -67,12 +67,12 @@ def study():
             # Repeats as long as you don't have the right answer
             correct = False
 
+            # Resets attempts tracker
+            attempts = 0
+
             # Loops as long as the user hasn't answered correctly
             while correct == False:
 
-                # Resets attempts tracker
-                attempts = 0
-                
                 # Checks direction
                 if currentDirection == 0:
 
@@ -93,6 +93,10 @@ def study():
                         if attempts > 3:
                             print("\nHint: " + currentCard[1][:3])
 
+                        # Answer displays when attempts is over 5
+                        if attempts > 5:
+                            print("\nThe answer was: " + currentCard[1] + ". Try again next time!")
+
                 elif currentDirection == 1:
 
                     # Gets an answer from user
@@ -111,21 +115,8 @@ def study():
                         # Hint displays when attempts is over 3
                         if attempts > 3:
                             print("\nHint: " + currentCard[0][:3])
+
+                        # Answer displays when attempts is over 5
+                        if attempts > 5:
+                            print("\nThe prompt was: " + currentCard[0] + ". Try again next time!")
             
-
-        # Opens file to write and closes when finished
-        outfile = open("C:/Users/Home/Desktop/final_project/decks/" + userFileRequest + ".csv", "w")
-
-        # Loops for cards in deck 
-        for card in deck:
-
-            # Processes cards
-            card = str(card)
-            card = card.replace("'", "")
-            card = card.replace("[", "")
-            card = card.replace("]", "")
-            card = card.replace(" ", "")
-            outfile.write(card + "\n")
-        
-        # Completion notice
-        print("Good job studying! \n")
